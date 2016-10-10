@@ -32,12 +32,13 @@ class WeightedQuickUnionPathCompression:
 
 class Percolation:
 
-    def __init__(self, N):
+    def __init__(self, N, bullshit=False):
         self.N = N
         self.qu = WeightedQuickUnionPathCompression(N * N + 2)
         self.open_id = np.zeros(N * N, dtype='bool')
         self.topv_index = N * N
         self.downv_index = N * N + 1
+        self.bullshit = bullshit
 
     def __repr__(self):
         return str(self.qu.arr[:-2].reshape(self.N, self.N)) + \
@@ -61,6 +62,9 @@ class Percolation:
         return ((i-1, j), (i, j+1), (i+1, j), (i, j-1))
 
     def open(self, p):
+        # zero-indexing stupidity
+        if self.bullshit:
+            p = (p[0] - 1, p[1] - 1) 
         if self.is_open(p):
             return
        
@@ -95,11 +99,8 @@ class Percolation:
 
 
 if __name__ == '__main__':
-    p = Percolation(5)
-    p.open((0,0))
-    p.open((1,0))
-    p.open((2,0))
-    p.open((2,1))
-    p.open((3,1))
-    p.open((4,1))
+    p = Percolation(2, bullshit=True)
+    p.open((1,1))
+    p.open((2,2))
+    p.open((1,2))
     print(p)
