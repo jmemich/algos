@@ -47,21 +47,28 @@ class FixedCapacityStackOfStrings:
         return item
 
 
-class ResizingArrayStackOfStrigns(FixedCapacityStackOfStrings):
+class ResizingArrayStackOfStrings:
 
     def __init__(self):
         self.N = 0
         self.s = np.ndarray(1, dtype='object')
 
+    def is_empty(self):
+        return self.N == 0
+
+    @property
+    def size(self):
+        return len(self.s)
+
     def push(self, item):
-        if self.N + 1 == len(self.s):
-            self.resize(2 * len(self.s))
-        self.N += 1
+        if self.N == self.size:
+            self.resize(2 * self.size)
         self.s[self.N] = item
+        self.N += 1
 
     def resize(self, capacity):
-        copy = np.ndarray(capacity, dtype='object')
-        for i in range(len(self.s)):
+        copy = np.ndarray(int(capacity), dtype='object')
+        for i in range(self.N):
             copy[i] = self.s[i]
         self.s = copy
 
@@ -73,8 +80,36 @@ class ResizingArrayStackOfStrigns(FixedCapacityStackOfStrings):
         # efficient solution to reduce size. prevents 'thrashing' where
         # sequence push-pop-push-pop when the array is full means that
         # every operation takes time proportional to N.
-        if self.N > 0 and self.N == len(self.s) / 4:
-            self.resize(len(self.s) / 2)
+        if self.N > 0 and self.N == self.size / 4:
+            self.resize(self.size / 2)
         return item
 
+
+def djikstras_two_stack_string(string):
+    #ops = LinkedStackOfStrings()
+    #vals = LinkedStackOfStrings()
+    ops = ResizingArrayStackOfStrings()
+    vals = ResizingArrayStackOfStrings()
+
+    # doesn't use stdin
+    for s in string:
+        if s == '(':
+            pass
+        elif s == '+':
+            ops.push(s)
+        elif s == '*':
+            ops.push(s)
+        elif s == ')':
+            op = ops.pop()
+            if op == '+':
+                vals.push(vals.pop() + vals.pop())
+            elif op == '*':
+                vals.push(vals.pop() * vals.pop())
+        elif s != ' ':
+            vals.push(int(s))
+    print(vals.pop())
+
+if __name__ == '__main__':
+    s = '( 1 + ( 2 * 3 ) )'
+    djikstras_two_stack_string(s)
 
