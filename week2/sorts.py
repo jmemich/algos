@@ -48,9 +48,29 @@ class InsertionSort:
                     break
 
 
+class ShellSort:
+
+    def sort(self, arr):
+        # https://en.wikibooks.org/wiki/Algorithm_Implementation/Sorting/Shell_sort#Python
+        N = len(arr)
+        gap = 1
+        while (gap < N / 3):
+            # 3x + 1 increment sequence
+            gap = 3 * gap + 1
+        while gap > 0:
+            for i in range(gap, N):
+                val = arr[i]
+                j = i
+                while j >= gap and arr[j - gap] > val:
+                    arr[j] = arr[j - gap]
+                    j -= gap
+                arr[j] = val
+            gap //= 3
+
+
 if __name__ == '__main__':
-    a = np.array([2,1,3,5,4])
+    a = np.array([2,1,3,5,4,8,9,0])
     print(a)
-    s = InsertionSort()
+    s = ShellSort()
     s.sort(a)
     print(a)
