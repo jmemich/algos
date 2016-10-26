@@ -32,7 +32,6 @@ class BruteCollinearPoints:
                 slopes.append(base.slope_to(point))
             if len(set(slopes)) == 1:
                 segment = self.longest_segment(candidate)
-                # TODO deal with dupes and shit
                 if segment not in segments:
                     segments.append(segment)
         return segments
