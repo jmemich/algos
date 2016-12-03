@@ -4,7 +4,7 @@ import numpy as np
 class QuickSort:
 
     def less(self, a, b):
-        return a < b
+        return a <= b
 
     def exch(self, arr, a, b):
         tmp = arr[a]
@@ -30,7 +30,7 @@ class QuickSort:
                 break
 
             self.exch(arr, i, j)
-        
+
         self.exch(arr, low, j)
         return j
 
@@ -48,8 +48,9 @@ class QuickSort:
 
 
 if __name__ == '__main__':
-    arr = np.array([8, 2, 1, 4, 3, 7, 9, 0])
-    print(arr)
+    test = [0, 0.5, 0.6666666666666666, 0.75, 1.0, 1.0, 1.0, 3.5, np.inf]
+    arr = [np.inf, 1.0, 2.0, 1.0, 1.5, 1.0, 1.3333333333333333, 1.0, 4.0] 
+    print(test)
     q = QuickSort()
-    q.sort(arr)
-    print(arr)
+    q.sort(test)
+    print(test)
