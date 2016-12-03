@@ -15,6 +15,7 @@ class BruteCollinearPoints:
 
     def longest_segment(self, points_list):
         # dirty hack -- fine as long as origin isn't in `points_list`
+        # this is actually the solution to the harder problem...
         origin = Point(1000000, 10000001)
         slopes = []
         for point in points_list:
