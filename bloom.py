@@ -56,8 +56,6 @@ class BloomFilter:
         self.count += 1
 
     def test(self, string):
-        # Always `True` if string has already been added.
-        # Either `True`/`False` if string has not.
         enc_string = string.encode('utf-8')
         in_array = []
         for i in range(self.nhashes):
